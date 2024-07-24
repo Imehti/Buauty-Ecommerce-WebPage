@@ -21,7 +21,7 @@ const Navbar = () => {
       </div>
 
       {/* //mobile menu */}
-      
+
       <div className="sm:hidden w-full h-dvh">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -40,19 +40,19 @@ const Navbar = () => {
             d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
           />
         </svg>
-        {isMenuOpen &&
-         <div className="bg-amber-200 h-dvh rounded-lg w-1/3">
-           <ul className="flex flex-col items-center font-semibold pt-2">
-            <li>Home</li>
-            <li>Shop</li>
-            <li>Blog</li>
-            <li>Contact us</li>
-            <div>
-              <Button>Login</Button>
-            </div>
-          </ul>
-         </div>
-         }
+        {isMenuOpen && (
+          <div className="bg-amber-200 h-dvh rounded-lg w-1/3">
+            <ul className="flex flex-col items-center font-semibold pt-2">
+              <li>Home</li>
+              <li>Shop</li>
+              <li>Blog</li>
+              <li>Contact us</li>
+              <div>
+                <Button>Login</Button>
+              </div>
+            </ul>
+          </div>
+        )}
       </div>
     </>
   );
