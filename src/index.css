@@ -74,3 +74,10 @@
     @apply bg-background text-foreground;
   }
 }
+
+.aboutBg{
+  background-image: url('src/assets/aboutPageBg.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  object-fit: cover;
+}
