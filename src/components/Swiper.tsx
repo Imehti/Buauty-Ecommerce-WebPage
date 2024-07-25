@@ -11,7 +11,7 @@ import useProducts from "@/hooks/useProducts";
 import ProductCards from "./Product-cards";
 
 const ProductsSwiper = () => {
-  const { data: products , isLoading } = useProducts();
+  const { data: products } = useProducts();
 
   return (
     <div className="mt-24 m-12 flex justify-center">
@@ -47,7 +47,7 @@ const ProductsSwiper = () => {
         }}
       >
         {products?.map((product) => (
-          <div>
+          <div key={product.id}>
             <SwiperSlide>
               <ProductCards
                 name={product.name}
