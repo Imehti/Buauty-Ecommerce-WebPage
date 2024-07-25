@@ -1,7 +1,6 @@
 import apiClient from "@/services/api-client";
 import { UseQueryResult, useQuery } from "@tanstack/react-query";
 
-
 interface Products {
   id: number;
   brand: string;
@@ -15,11 +14,10 @@ interface Products {
   product_colors: [{ hex_value: string; colour_name: string }];
 }
 
-const useProducts=(): UseQueryResult<Products, Error>=>
-useQuery<Products,Error>({
-    queryKey:['products'],
-    queryFn:()=> apiClient.get<Products>('').then(res=>res.data)
-})
+const useProducts = () =>
+  useQuery<Products[], Error>({
+    queryKey: ["products"],
+    queryFn: () => apiClient.get<Products[]>("").then((res) => res.data.slice(0, 30)),
+  });
 
-
-export default useProducts
+export default useProducts;
