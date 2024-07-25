@@ -4,7 +4,9 @@ import CardSkeleton from "./Card-Skeleton";
 
 const ProductsPage = () => {
 
-  const {isLoading} =useProducts()
+  const {isLoading,isError,error} =useProducts()
+
+  if(isError) return <h1 className="text-2xl m-8 font-semibold text-destructive">{error.message}</h1>
   return (
     <>
       <div className="h-fit">
