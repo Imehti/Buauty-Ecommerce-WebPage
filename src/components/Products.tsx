@@ -1,6 +1,7 @@
 import useProducts from "@/hooks/useProducts";
 import ProductsSwiper from "./Swiper";
 import CardSkeleton from "./Card-Skeleton";
+import { Button } from "./ui/button";
 
 const ProductsPage = () => {
 
@@ -15,6 +16,9 @@ const ProductsPage = () => {
         </div>
         {isLoading ?<CardSkeleton />: <ProductsSwiper />}
       </div>
+     <div className="flex justify-center items-center h-fit">
+     <Button className="text-xl mb-3" variant={'link'}>View All Products</Button>
+     </div>
     </>
   );
 };
