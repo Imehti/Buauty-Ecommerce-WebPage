@@ -1,15 +1,20 @@
 import { Button } from "./ui/button";
 
-interface ProductCardsProps{
-    name:string,
-    price:string,
-    price_sign: string;
-    image_link: string;
-    product_type: string;
-
+interface ProductCardsProps {
+  name: string;
+  price: string;
+  price_sign: string;
+  image_link: string;
+  product_type: string;
 }
 
-const ProductCards = ({name,price,price_sign,image_link,product_type}:ProductCardsProps) => {
+const ProductCards = ({
+  name,
+  price,
+  price_sign,
+  image_link,
+  product_type,
+}: ProductCardsProps) => {
   return (
     <>
       <div className="relative m-4  flex flex-col justify-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -37,10 +42,13 @@ const ProductCards = ({name,price,price_sign,image_link,product_type}:ProductCar
         </div>
         <div className="ml-3 flex flex-col justify-center">
           <p>{name}</p>
-          <span>{price}{price_sign}</span>
+          <span>
+            {price}
+            {price_sign}
+          </span>
         </div>
         <div className="flex justify-center items-center mt-1 mb-2">
-        <Button size={'sm'}>ADD TO CART</Button>
+          <Button size={"sm"}>ADD TO CART</Button>
         </div>
       </div>
     </>
