@@ -8,6 +8,7 @@ interface Products {
   price: string;
   price_sign: string;
   image_link: string;
+  api_featured_image:string
   description: string;
   category: string;
   product_type: string;
