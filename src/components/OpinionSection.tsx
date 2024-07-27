@@ -68,7 +68,7 @@ const Opinions = () => {
       <div className="bg-gray-100">
         <div className="flex flex-col items-center justify-center h-fit mt-12 gap-y-4">
           <h2 className="font-medium mt-4">TESTIMONIAL</h2>
-          <h1 className="text-2xl font-semibold font-serif">
+          <h1 className="text-4xl font-semibold font-serif">
             What People Say?
           </h1>
         </div>
