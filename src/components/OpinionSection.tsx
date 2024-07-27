@@ -5,12 +5,10 @@ import { Button } from "./ui/button";
 const Opinions = () => {
   const { data: users } = useUsers();
   const [selectUser, setUser] = useState<Results>();
-  const [lastIndex,setLastIndex] =useState(false)
-  const [firstIndex,setFirstIndex] =useState(false)
+  const [lastIndex, setLastIndex] = useState(false);
+  const [firstIndex, setFirstIndex] = useState(false);
 
-  const selectedUser = users?.results.filter(
-    (user) => user === selectUser
-  );
+  const selectedUser = users?.results.filter((user) => user === selectUser);
 
   useEffect(() => {
     if (users?.results) {
@@ -20,6 +18,22 @@ const Opinions = () => {
 
   const handleSelectedUser = (user: Results) => {
     setUser(user);
+    const index = users?.results.findIndex((u) => u === user);
+    if (
+      index !== -1 &&
+      index !== undefined &&
+      users?.results &&
+      users?.results.length - 1 === index
+    ) {
+      setLastIndex(true);
+    } else {
+      setLastIndex(false);
+    }
+    if (index === 0) {
+      setFirstIndex(true);
+    } else {
+      setFirstIndex(false);
+    }
   };
 
   const handleNextButton = (user: Results) => {
@@ -27,13 +41,17 @@ const Opinions = () => {
     if (index !== -1 && index !== undefined) {
       setUser(users?.results[index + 1]);
     }
-    if (index !== -1 && index !== undefined && users?.results && users?.results.length-2 === index){
-      setLastIndex(true)
+    if (
+      index !== -1 &&
+      index !== undefined &&
+      users?.results &&
+      users?.results.length - 2 === index
+    ) {
+      setLastIndex(true);
     }
 
-    setFirstIndex(false)
-  
-  }
+    setFirstIndex(false);
+  };
   const handlePreviousButton = (user: Results) => {
     const index = users?.results.findIndex((u) => u === user);
     if (index === 0) {
@@ -41,10 +59,9 @@ const Opinions = () => {
     } else if (index !== -1 && index !== undefined) {
       setUser(users?.results[index - 1]);
     }
-  
+
     setLastIndex(false);
   };
-
 
   return (
     <>
@@ -62,9 +79,8 @@ const Opinions = () => {
             {users?.results.map((user) => (
               <img
                 className={`${
-                  selectedUser?.some(
-                    (u) => u === user
-                  ) && "transform -translate-y-3"
+                  selectedUser?.some((u) => u === user) &&
+                  "transform -translate-y-3"
                 }`}
                 onClick={() => handleSelectedUser(user)}
                 src={user.picture.large}
@@ -117,8 +133,18 @@ const Opinions = () => {
                   </div>
                 </div>
                 <div className="flex space-x-4 md:mt-8 mb-2">
-                  <Button disabled={firstIndex} onClick={() => handlePreviousButton(user)}>Previous</Button>
-                  <Button disabled={lastIndex} onClick={() => handleNextButton(user)}>Next</Button>
+                  <Button
+                    disabled={firstIndex}
+                    onClick={() => handlePreviousButton(user)}
+                  >
+                    Previous
+                  </Button>
+                  <Button
+                    disabled={lastIndex}
+                    onClick={() => handleNextButton(user)}
+                  >
+                    Next
+                  </Button>
                 </div>
               </div>
             ))}
