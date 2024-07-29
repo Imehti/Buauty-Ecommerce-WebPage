@@ -1,3 +1,5 @@
+import SocialLinks from "./Social";
+
 export interface TeamMembersProps {
   id: number;
   picture: string;
@@ -45,6 +47,7 @@ const TeamMembersCard = ({
           <h1 className="-mt-12 font-semibold font-serif">{name}</h1>
           <h2 className="text-red-500 font-medium">{expertise}</h2>
           <p className="p-3  w-2/3 font-light ml-4">{description}</p>
+        <SocialLinks />
         </div>
       </div>
       {/* </div> */}
