@@ -66,14 +66,14 @@ const Opinions = () => {
   return (
     <>
       <div className="bg-gray-100">
-        <div className="flex flex-col items-center justify-center h-fit mt-12 gap-y-4">
-          <h2 className="font-medium mt-4">TESTIMONIAL</h2>
-          <h1 className="text-4xl font-semibold font-serif">
+        <div className="flex flex-col items-center justify-center h-fit lg:space-y-4">
+          <h2 className="font-medium mt-4 lg:mt-12">TESTIMONIAL</h2>
+          <h1 className="lg:text-4xl text-2xl font-semibold font-serif">
             What People Say?
           </h1>
         </div>
 
-        <div className="md:grid grid-cols-2 justify-center flex flex-col md:mt-12">
+        <div className="md:grid grid-cols-2 justify-center flex flex-col md:mt-24">
           {/* pictures */}
           <div className="grid grid-cols-4 h-fit gap-y-4 gap-x-0 m-12 sm:ml-20">
             {users?.results.map((user) => (
@@ -93,7 +93,7 @@ const Opinions = () => {
 
           {selectedUser &&
             selectedUser?.map((user) => (
-              <div className="md:mt-8 -mt-11 md:inline-block flex flex-col items-center justify-center">
+              <div className="md:mt-8 -mt-11 lg:inline-block flex flex-col justify-center">
                 <img
                   className="w-[12%] inline-block"
                   src="src/assets/speaking-icon.svg"
@@ -101,14 +101,14 @@ const Opinions = () => {
                 />
                 <div className="inline-block h-fit">
                   <div className="flex flex-row justify-evenly">
-                    <div className="flex flex-col h-fit ml-8 md:ml-0">
+                    <div className="h-fit ml-8 md:ml-0">
                       <div>
                         <p className="inline-block font-bold font-serif text-xl">
                           {user.name.first}
                         </p>
                         <p className="font-semibold">{user.location.city}</p>
                       </div>
-                      <p className="md:mt-4 text-left p-1 md:ml-0 w-full">
+                      <p className="md:mt-7 text-left p-1 md:ml-0 w-full font-light">
                         Lorem ipsum, dolor sit amet consectetur adipisicing
                         elit. Commodi expedita et molestias fugiat quos aliquam
                         officia non neque provident. Quaerat consequatur laborum
@@ -132,14 +132,16 @@ const Opinions = () => {
                     </div>
                   </div>
                 </div>
-                <div className="flex space-x-4 md:mt-8 mb-2">
+                <div className="space-x-4 lg:mt-2 mt-1 ml-8 md:ml-0">
                   <Button
+                  size={'sm'}
                     disabled={firstIndex}
                     onClick={() => handlePreviousButton(user)}
                   >
                     Previous
                   </Button>
                   <Button
+                  size={'sm'}
                     disabled={lastIndex}
                     onClick={() => handleNextButton(user)}
                   >
