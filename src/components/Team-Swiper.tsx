@@ -26,7 +26,7 @@ const TeamMembersSwiper = () => {
                 slidesPerView: 1,
                 spaceBetween: 30,
               },
-              640: {
+              720: {
                 slidesPerView: 2,
                 spaceBetween: 40,
               },
