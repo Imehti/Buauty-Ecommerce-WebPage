@@ -3,6 +3,7 @@ import BlogPage from "./components/Blog";
 import HomePage from "./components/HomePage";
 import Opinions from "./components/OpinionSection";
 import ProductsPage from "./components/Products";
+import TeamSection from "./components/Team";
 
 const App = () => {
   return (
@@ -12,6 +13,7 @@ const App = () => {
       <BlogPage />
       <ProductsPage />
       <Opinions />
+      <TeamSection />
     </>
   );
 };
