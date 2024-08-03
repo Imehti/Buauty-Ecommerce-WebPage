@@ -4,7 +4,8 @@ import TeamMembersCard from "./Team-Card";
 
 const TeamMembersSwiper = () => {
   return (
-    <ReusableSwiper
+    <div className="h-fit">
+          <ReusableSwiper
       data={TeamMembers}
       renderSlide={(member) => (
         <TeamMembersCard
@@ -16,7 +17,8 @@ const TeamMembersSwiper = () => {
         />
       )}
       swiperConfig={{
-     
+        scrollbar:{draggable:false},
+        navigation:false,
         breakpoints:{
             320: {
                 slidesPerView: 1,
@@ -38,6 +40,8 @@ const TeamMembersSwiper = () => {
       }}
       
     />
+    </div>
+
   );
 };
 
