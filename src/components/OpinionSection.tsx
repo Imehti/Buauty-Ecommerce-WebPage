@@ -1,7 +1,8 @@
 import useUsers, { Results, Users } from "@/hooks/useUsers";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import CardSkeleton from "./Card-Skeleton";
+import CardSkeleton from "./OpinionSkeleton";
+import OpinionSkeleton from "./OpinionSkeleton";
 
 const Opinions = () => {
   const { data: users, isError, error, isFetching } = useUsers();
@@ -75,7 +76,7 @@ const Opinions = () => {
         </div>
 
         {isFetching ? (
-          <CardSkeleton />
+          <OpinionSkeleton />
         ) : isError ? (
           <div className="h-fit">
             <h1 className="text-2xl m-4 text-destructive font-serif">
