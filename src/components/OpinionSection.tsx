@@ -1,6 +1,7 @@
 import useUsers, { Results, Users } from "@/hooks/useUsers";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
+import CardSkeleton from "./Card-Skeleton";
 
 const Opinions = () => {
   const { data: users, isError, error, isFetching } = useUsers();
@@ -73,7 +74,9 @@ const Opinions = () => {
           </h1>
         </div>
 
-        {isError ? (
+        {isFetching ? (
+          <CardSkeleton />
+        ) : isError ? (
           <div className="h-fit">
             <h1 className="text-2xl m-4 text-destructive font-serif">
               {error.message}
