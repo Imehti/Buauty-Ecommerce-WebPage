@@ -1,9 +1,7 @@
 import useProducts from "@/hooks/useProducts";
 
-import CardSkeleton from "./OpinionSkeleton";
 import { Button } from "./ui/button";
 import ProductsSwiper from "./Product-Swiper";
-import CardSkelton from "./CardSkelteon";
 import ProductCardSkeleton from "./CardSkelteon";
 
 const ProductsPage = () => {
