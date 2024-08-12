@@ -93,3 +93,14 @@
     /* background-attachment: fixed; */
   
 }
+.LoginForm{
+  background-image: url('src/assets/login-page/login.png');
+    /* background-size: 100% 100%; */
+    background-size:cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    /* height: 100vh; */
+    /* background-attachment: fixed; */
+  
+}
