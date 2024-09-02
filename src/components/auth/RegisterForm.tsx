@@ -23,10 +23,9 @@ import { useState, useTransition } from "react";
 // }
 
 const RegisterForm = () => {
-  const [isPending, startTransition] = useTransition();
-
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
+  const [isPending, setIsPending] = useState(false);
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -38,12 +37,19 @@ const RegisterForm = () => {
   const onSubmit = (values: z.infer<typeof RegisterSchema>) => {
     setError("");
     setSuccess("");
-    startTransition(() => {
-      register(values).then((data) => {
-        setError(data.error);
-        setSuccess(data.success);
-      });
-    });
+    setIsPending(true);
+
+    register(values)
+      .then((data) => {
+        console.log(data);
+
+        if (data?.error) {
+          setError(data.error);
+        } else if (data?.success) {
+          setSuccess(data.success);
+        }
+      })
+      .finally(() => setIsPending(false));
   };
 
   return (
