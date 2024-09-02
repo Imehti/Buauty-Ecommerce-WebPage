@@ -6,7 +6,7 @@ import { Input } from "../ui/input";
 import CardWrapper from "./CardWrapper";
 import { LoginSchema } from "@/schemas";
 import { Button } from "../ui/button";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 import FormSuccess from "./FormSuccess";
 import FormError from "./FormError";
 import { login } from "@/actions/login";

@@ -16,7 +16,7 @@ import { Button } from "../ui/button";
 import { register } from "@/actions/register";
 import FormSuccess from "./FormSuccess";
 import FormError from "./FormError";
-import { useState, useTransition } from "react";
+import { useState } from "react";
 
 // interface RegisterFormProps {
 //   title: string;
