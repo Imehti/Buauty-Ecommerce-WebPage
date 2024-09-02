@@ -6,12 +6,20 @@ import { Input } from "../ui/input";
 import CardWrapper from "./CardWrapper";
 import { LoginSchema } from "@/schemas";
 import { Button } from "../ui/button";
+import { useState, useTransition } from "react";
+import FormSuccess from "./FormSuccess";
+import FormError from "./FormError";
+import { login } from "@/actions/login";
 
 interface LoginFormProps {
   title: string;
 }
 
 const LoginForm = () => {
+  const [error, setError] = useState<string | undefined>();
+  const [success, setSuccess] = useState<string | undefined>();
+  const [isPending, setIsPending] = useState(false);
+
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
     defaultValues: {
@@ -19,10 +27,24 @@ const LoginForm = () => {
       password: "",
     },
   });
-  const onSubmit = (data: z.infer<typeof LoginSchema>) => {
-    console.log(data);
-  };
 
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
+    setError("");
+    setSuccess("");
+    setIsPending(true); // Set isPending to true when the submission starts
+    login(values)
+      .then((data) => {
+        console.log(data);
+        if (data?.error) {
+          setError(data.error);
+        } else if (data?.success) {
+          setSuccess(data.success);
+        }
+      })
+      .finally(() => {
+        setIsPending(false); // Set isPending to false when the submission is done
+      });
+  };
   return (
     <>
       <CardWrapper
@@ -33,7 +55,7 @@ const LoginForm = () => {
       >
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-4">
+            <div className="space-y-4 mb-4">
               <FormField
                 control={form.control}
                 name="email"
@@ -69,7 +91,10 @@ const LoginForm = () => {
                 )}
               />
             </div>
+            <FormSuccess message={success} />
+            <FormError message={error} />
             <Button
+              disabled={isPending}
               type="submit"
               className="mt-7 w-full border border-gray-300 text-white bg-green-700 hover:bg-indigo-700"
             >
