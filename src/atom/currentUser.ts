@@ -1,16 +1,12 @@
+import { User } from "firebase/auth";
 import { atom } from "recoil";
 
-export interface User{
-    accessToken:string,
-    email:string,
-    uid:string,
-    stsTokenManager:{expirationTime:number,refreshToken:string},
-    reloadUserInfo:{createdAt:string,lastLoginAt:string,passwordHash:string}
-}
+const currentUser = atom<User | null>({
+  key: "currentUser",
+  default:
+    localStorage.getItem("user")?.trim() !== ""
+      ? JSON.parse(localStorage.getItem("user") ?? "")
+      : (null as User | null),
+});
 
-const currentUser=atom({
-    key:'userState',
-    default:{}
-})
-
-export default currentUser
+export default currentUser;
