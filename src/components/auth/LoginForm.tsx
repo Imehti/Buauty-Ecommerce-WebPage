@@ -6,10 +6,14 @@ import { Input } from "../ui/input";
 import CardWrapper from "./CardWrapper";
 import { LoginSchema } from "@/schemas";
 import { Button } from "../ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormSuccess from "./FormSuccess";
 import FormError from "./FormError";
 import { login } from "@/actions/login";
+import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import currentUser from "@/atom/currentUser";
+import { User } from "firebase/auth";
 
 interface LoginFormProps {
   title: string;
@@ -19,6 +23,8 @@ const LoginForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, setIsPending] = useState(false);
+  const [user, setUser] = useRecoilState<User | null>(currentUser);
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
@@ -34,17 +40,21 @@ const LoginForm = () => {
     setIsPending(true); // Set isPending to true when the submission starts
     login(values)
       .then((data) => {
-        console.log(data);
         if (data?.error) {
           setError(data.error);
         } else if (data?.success) {
           setSuccess(data.success);
+          setUser(data.user);
+          navigate("/");
         }
       })
       .finally(() => {
         setIsPending(false); // Set isPending to false when the submission is done
       });
   };
+  useEffect(()=>{
+    localStorage.setItem("user",JSON.stringify(user))
+  },[user])
   return (
     <>
       <CardWrapper
