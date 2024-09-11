@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
+import LoginButton from "./auth/LoginButton";
+import LogoutButton from "./auth/LogOutButton";
+
+
 
 const Navbar = () => {
   const [isMenuOpen, setISMenuOpen] = useState(false);
@@ -14,9 +18,13 @@ const Navbar = () => {
             <li>Shop</li>
             <li>Blog</li>
             <li>Contact us</li>
-            <div>
+            <Link to={'/Cart'}>Cart</Link>
+            <div className="space-x-4">
               <Link to={"/login"}>
-                <Button>Login</Button>
+                <Button>
+                  Login
+                </Button>
+                
               </Link>
             </div>
           </ul>
@@ -51,7 +59,8 @@ const Navbar = () => {
               <li>Blog</li>
               <li>Contact us</li>
               <div>
-                <Button>Login</Button>
+                <LoginButton />
+                <LogoutButton />
               </div>
             </ul>
           </div>
