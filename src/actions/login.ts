@@ -14,7 +14,7 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
     const userCredential = await signInWithEmailAndPassword(
       auth,
       email,
-      password,
+      password
     );
     const user = userCredential.user;
     return { user, success: "Login successfully", error: null };
