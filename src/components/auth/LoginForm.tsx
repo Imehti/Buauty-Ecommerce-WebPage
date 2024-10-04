@@ -53,7 +53,10 @@ const LoginForm = () => {
       });
   };
   useEffect(()=>{
-    localStorage.setItem("user",JSON.stringify(user))
+    if(user && user !==null) {
+
+      localStorage.setItem("user",JSON.stringify(user))
+    }
   },[user])
   return (
     <>
