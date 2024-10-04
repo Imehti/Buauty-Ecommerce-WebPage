@@ -1,13 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import LoginButton from "./auth/LoginButton";
 import LogoutButton from "./auth/LogOutButton";
 
-
-
 const Navbar = () => {
   const [isMenuOpen, setISMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+useEffect(() => {
+  const user = localStorage.getItem("user");
+  if (user && user !== null && user.trim() !== "") {
+    setIsLoggedIn(true);
+  } else {
+    setIsLoggedIn(false);
+  }
+}, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setIsLoggedIn(false);
+  };
 
   return (
     <>
@@ -18,14 +31,15 @@ const Navbar = () => {
             <li>Shop</li>
             <li>Blog</li>
             <li>Contact us</li>
-            <Link to={'/Cart'}>Cart</Link>
+            <Link to={"/Cart"}>Cart</Link>
             <div className="space-x-4">
-              <Link to={"/login"}>
-                <Button>
-                  Login
-                </Button>
-                
-              </Link>
+              {isLoggedIn ? (
+                <Button onClick={handleLogout}>Logout</Button>
+              ) : (
+                <Link to={"/login"}>
+                  <Button>Login</Button>
+                </Link>
+              )}
             </div>
           </ul>
         </nav>
