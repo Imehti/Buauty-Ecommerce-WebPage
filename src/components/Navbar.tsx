@@ -8,20 +8,15 @@ const Navbar = () => {
   const [isMenuOpen, setISMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-useEffect(() => {
-  const user = localStorage.getItem("user");
-  if (user && user !== null && user.trim() !== "") {
-    setIsLoggedIn(true);
-  } else {
-    setIsLoggedIn(false);
-  }
-}, []);
+  useEffect(() => {
+    const user = localStorage.getItem("user");
+    setIsLoggedIn(user !== null && user !== undefined);
+  }, [localStorage.getItem("user")]);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     setIsLoggedIn(false);
   };
-
   return (
     <>
       <div className="hidden sm:block w-full">

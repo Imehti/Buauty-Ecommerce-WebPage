@@ -17,6 +17,7 @@ import { register } from "@/actions/register";
 import FormSuccess from "./FormSuccess";
 import FormError from "./FormError";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 // interface RegisterFormProps {
 //   title: string;
@@ -26,6 +27,8 @@ const RegisterForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, setIsPending] = useState(false);
+  const navigate=useNavigate()
+
 
   const form = useForm<z.infer<typeof RegisterSchema>>({
     resolver: zodResolver(RegisterSchema),
@@ -47,6 +50,7 @@ const RegisterForm = () => {
           setError(data.error);
         } else if (data?.success) {
           setSuccess(data.success);
+          navigate("/login")
         }
       })
       .finally(() => setIsPending(false));

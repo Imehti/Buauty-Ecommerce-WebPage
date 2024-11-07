@@ -1,3 +1,4 @@
+import LoginPage from "./components/auth/LoginPage";
 import AboutPage from "./components/AboutPage";
 import BlogPage from "./components/Blog";
 import Footer from "./components/Footer";
@@ -16,6 +17,7 @@ const App = () => {
       <Opinions />
       <TeamSection />
       <Footer />
+      {/* <LoginPage /> */}
     </>
   );
 };

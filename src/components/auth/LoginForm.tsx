@@ -1,5 +1,6 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { pick } from "lodash";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
@@ -45,6 +46,18 @@ const LoginForm = () => {
         } else if (data?.success) {
           setSuccess(data.success);
           setUser(data.user);
+          // console.log("User state updated:", data.user);
+          const userDataToStore = pick(data.user, [
+            "uid",
+            "email",
+            "displayName",
+          ]); // Extract only the serializable properties
+          try {
+            console.log(userDataToStore)
+            localStorage.setItem("user", JSON.stringify(userDataToStore));
+          } catch (error) {
+            console.error("Error storing user data in local storage:", error);
+          }
           navigate("/");
         }
       })
@@ -52,12 +65,16 @@ const LoginForm = () => {
         setIsPending(false); // Set isPending to false when the submission is done
       });
   };
-  useEffect(()=>{
-    if(user && user !==null) {
+  // useEffect(() => {
 
-      localStorage.setItem("user",JSON.stringify(user))
-    }
-  },[user])
+  //   if (user && user !== null) {
+  //     try {
+  //       localStorage.setItem("user", JSON.stringify(user));
+  //     } catch (error) {
+  //       console.error("Error storing user data in local storage:", error);
+  //     }
+  //   }
+  // }, [user]);
   return (
     <>
       <CardWrapper
