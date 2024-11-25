@@ -3,6 +3,7 @@ import useProducts from "@/hooks/useProducts";
 import { Button } from "./ui/button";
 import ProductsSwiper from "./Product-Swiper";
 import ProductCardSkeleton from "./CardSkelteon";
+import { Link } from "react-router-dom";
 
 const ProductsPage = () => {
   const { isLoading, isError, error } = useProducts();
@@ -23,7 +24,7 @@ const ProductsPage = () => {
       </div>
       <div className="flex justify-center items-center h-fit">
         <Button className="text-xl mb-3" variant={"link"}>
-          View All Products
+          <Link to={'/allProducts'}>View All Products</Link>
         </Button>
       </div>
     </>
