@@ -1,5 +1,5 @@
 import apiClient from "@/services/api-client";
-import { UseQueryResult, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export interface Products {
   id: number;
