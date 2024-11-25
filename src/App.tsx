@@ -1,24 +1,12 @@
-import LoginPage from "./components/auth/LoginPage";
-import AboutPage from "./components/AboutPage";
-import BlogPage from "./components/Blog";
-import Footer from "./components/Footer";
-import HomePage from "./components/HomePage";
-import Opinions from "./components/OpinionSection";
-import ProductsPage from "./components/Products";
-import TeamSection from "./components/Team";
+import AppRoutes from "./routes/Routes"; // Adjust the path as necessary
 
 const App = () => {
   return (
-    <>
-      <HomePage />
-      <AboutPage />
-      <BlogPage />
-      <ProductsPage />
-      <Opinions />
-      <TeamSection />
-      <Footer />
-      {/* <LoginPage /> */}
-    </>
+
+      <div>
+        <AppRoutes /> {/* This will handle the main content based on the URL */}
+      </div>
+  
   );
 };
 
