@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ProductCards from "../components/Product-cards";
 import { Button } from "@/components/ui/button";
 import useAllProducts from "@/hooks/useAllProducts";
@@ -7,8 +7,11 @@ import ProductCardSkeleton from "@/components/CardSkelteon";
 const AllProducts = () => {
   const pageSize = 19; // Number of products per page
   const [page, setPage] = useState(1);
+  const { data: allProducts, isLoading, isError, refetch } = useAllProducts();
 
-  const { data: allProducts, isLoading, isError  } = useAllProducts();
+  useEffect(() => {
+    refetch();
+  }, []);
 
   // Calculate the paginated products
   const totalPages = useMemo(
@@ -34,12 +37,20 @@ const AllProducts = () => {
     }
   }, [page]);
 
-  if (isLoading) return <ProductCardSkeleton />;
-  if (isError) return <p>Error loading products.</p>;
+  if (isLoading)
+    return (
+      <div>
+        <ProductCardSkeleton />
+        <div className="-mt-56">
+        <ProductCardSkeleton />
+        </div>
+      </div>
+    );
+  if (isError) return <div><p className="text-red-600 font-semibold">Error loading products.</p></div>;
 
   return (
     <>
-      <div className="grid grid-cols-4 gap-4 p-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-10">
         <div className="flex justify-center mt-3">
           <h1 className="text-2xl font-mono">All Products</h1>
         </div>
