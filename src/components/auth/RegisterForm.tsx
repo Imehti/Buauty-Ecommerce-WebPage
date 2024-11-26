@@ -17,7 +17,8 @@ import { register } from "@/actions/register";
 import FormSuccess from "./FormSuccess";
 import FormError from "./FormError";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
+
 
 // interface RegisterFormProps {
 //   title: string;
