@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import ProductCards from "../components/Product-cards";
 import { Button } from "@/components/ui/button";
 import useAllProducts from "@/hooks/useAllProducts";
@@ -8,29 +8,34 @@ const AllProducts = () => {
   const pageSize = 19; // Number of products per page
   const [page, setPage] = useState(1);
 
-  const { data: allProducts, isLoading, isError } = useAllProducts();
+  const { data: allProducts, isLoading, isError  } = useAllProducts();
+
+  // Calculate the paginated products
+  const totalPages = useMemo(
+    () => Math.ceil((allProducts?.length ?? 0) / pageSize),
+    [allProducts]
+  );
+  const currentProducts = useMemo(() => {
+    const startIndex = (page - 1) * pageSize;
+    return allProducts?.slice(startIndex, startIndex + pageSize);
+  }, [page, allProducts, pageSize]);
+
+  const nextPage = useCallback(() => {
+    if (page < totalPages) {
+      setPage((prev) => prev + 1);
+      window.scrollTo(0, 0); // Scroll to the top of the page
+    }
+  }, [page, totalPages]);
+
+  const prevPage = useCallback(() => {
+    if (page > 1) {
+      setPage((prev) => prev - 1);
+      window.scrollTo(0, 0); // Scroll to the top of the page
+    }
+  }, [page]);
 
   if (isLoading) return <ProductCardSkeleton />;
   if (isError) return <p>Error loading products.</p>;
-
-  // Calculate the paginated products
-  const totalPages = Math.ceil((allProducts?.length ?? 0) / pageSize);
-  const startIndex = (page - 1) * pageSize;
-  const currentProducts = allProducts?.slice(startIndex, startIndex + pageSize);
-
-  const nextPage = () => {
-    if (page < totalPages) {
-      setPage(page + 1);
-      window.scrollTo(0, 0); // Scroll to the top of the page
-    }
-  };
-
-  const prevPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-      window.scrollTo(0, 0); // Scroll to the top of the page
-    }
-  };
 
   return (
     <>
@@ -48,13 +53,20 @@ const AllProducts = () => {
             product_type={product.product_type}
           />
         ))}
-        <div className="flex space-x-3 p-4">
-          <Button onClick={prevPage} disabled={page === 1}>
-            Previous
-          </Button>
-          <Button onClick={nextPage} disabled={page === totalPages}>
-            Next
-          </Button>
+        <div className="flex flex-col">
+          <div className="flex space-x-3 p-4">
+            <Button onClick={prevPage} disabled={page === 1}>
+              Previous
+            </Button>
+            <Button onClick={nextPage} disabled={page === totalPages}>
+              Next
+            </Button>
+          </div>
+          <div className="ml-8">
+            <span>
+              page {page} of {totalPages}
+            </span>
+          </div>
         </div>
       </div>
     </>
