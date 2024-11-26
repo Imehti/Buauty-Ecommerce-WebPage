@@ -22,7 +22,7 @@ const ProductCardSkeleton = () => {
           </div>
         ) : (
           Array(4).fill('').map((_, index) => (
-            <div key={index} className="flex flex-col m-8 rounded shadow-md w-full h-96 bg-white border border-gray-200">
+            <div key={index} className="flex flex-col m-1 rounded shadow-md w-full h-fit bg-white border border-gray-200">
               <div className="h-48 rounded-t bg-gray-200 animate-pulse"></div>
               <div className="flex-1 flex-row justify-between px-4 py-8 space-y-4 sm:p-8">
                 <div className="flex h-fit space-x-4 justify-between">
