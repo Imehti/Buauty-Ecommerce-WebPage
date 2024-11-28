@@ -18,7 +18,8 @@ export interface Products {
 const useProducts = () =>
   useQuery<Products[], Error>({
     queryKey: ["products"],
-    queryFn: () => apiClient.get<Products[]>("").then((res) => res.data.slice(0, 30)),
+    queryFn: () => apiClient.get<Products[]>("").then((res) => res.data),
+    enabled:false
   });
 
 export default useProducts;
