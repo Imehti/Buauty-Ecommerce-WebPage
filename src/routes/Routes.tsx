@@ -1,4 +1,5 @@
 import LoadingSpinner from "@/components/LoadingSpinner";
+import ProductDetails from "@/pages/ProductDetails";
 import React, { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 
@@ -20,6 +21,7 @@ const AppRoutes = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/allProducts" element={<AllProducts />} />
+        <Route path="/productDetails" element={<ProductDetails />} />
         {/* Include About and Blog as part of HomePage or another component */}
         <Route path="/" element={<HomeWithAboutAndBlog />} />
       </Routes>
