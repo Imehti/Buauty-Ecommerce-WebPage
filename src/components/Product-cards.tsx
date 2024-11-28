@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Button } from "./ui/button";
 
 interface ProductCardsProps {
@@ -6,6 +7,7 @@ interface ProductCardsProps {
   price_sign: string;
   image_link: string;
   product_type: string;
+  //id:number
 }
 
 const ProductCards = ({
@@ -14,10 +16,12 @@ const ProductCards = ({
   price_sign,
   image_link,
   product_type,
+  //id
 }: ProductCardsProps) => {
   return (
     <>
-      <div className="relative m-4  flex flex-col justify-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <Link to={'/productDetails'}>
+      <div onClick={()=>{}} className="relative m-4  flex flex-col justify-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
         <div>
           <img
             className="w-full aspect-square rounded-t-md"
@@ -51,6 +55,7 @@ const ProductCards = ({
           <Button size={"sm"}>ADD TO CART</Button>
         </div>
       </div>
+      </Link>
     </>
   );
 };
