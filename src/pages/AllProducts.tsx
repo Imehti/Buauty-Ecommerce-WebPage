@@ -1,13 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import ProductCards from "../components/Product-cards";
 import { Button } from "@/components/ui/button";
-import useAllProducts from "@/hooks/useAllProducts";
 import ProductCardSkeleton from "@/components/CardSkelteon";
+import useProducts from "@/hooks/useProducts";
 
 const AllProducts = () => {
   const pageSize = 19; // Number of products per page
   const [page, setPage] = useState(1);
-  const { data: allProducts, isLoading, isError, refetch } = useAllProducts();
+  const { data: allProducts, isLoading, isError, refetch } = useProducts();
 
   useEffect(() => {
     refetch();
