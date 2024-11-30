@@ -2,21 +2,25 @@ import useProducts from "@/hooks/useProducts";
 import ProductCards from "./Product-cards";
 import ReusableSwiper from "./Swiper";
 import { useEffect } from "react";
+import ProductCardSkeleton from "./CardSkelteon";
 
 const ProductsSwiper = () => {
-  const { data , refetch } = useProducts();
+  const { fetchProducts } = useProducts();
+  const {data,refetch,isLoading}=fetchProducts
 
-  useEffect(()=>{
-    refetch()
-  },[])
+  useEffect(() => {
+    refetch();
+  }, []);
 
- const products=data?.slice(0,30)
+  if(isLoading) return <ProductCardSkeleton />
+
+  const products = data?.slice(0, 30);
   return (
     <ReusableSwiper
       data={products}
       renderSlide={(product) => (
         <ProductCards
-        //id={product.id}
+          id={product.id}
           name={product.name}
           product_type={product.product_type}
           price={product.price}
@@ -28,4 +32,4 @@ const ProductsSwiper = () => {
   );
 };
 
-export default ProductsSwiper
+export default ProductsSwiper;
