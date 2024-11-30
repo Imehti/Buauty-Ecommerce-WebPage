@@ -7,7 +7,8 @@ import useProducts from "@/hooks/useProducts";
 const AllProducts = () => {
   const pageSize = 19; // Number of products per page
   const [page, setPage] = useState(1);
-  const { data: allProducts, isLoading, isError, refetch } = useProducts();
+  const {fetchProducts} = useProducts()
+  const { data: allProducts, isLoading, isError, refetch } = fetchProducts;
 
   useEffect(() => {
     refetch();
@@ -57,6 +58,7 @@ const AllProducts = () => {
         {currentProducts?.map((product) => (
           <ProductCards
             key={product.id}
+            id={product.id}
             name={product.name}
             price={product.price}
             price_sign={product.price_sign}
