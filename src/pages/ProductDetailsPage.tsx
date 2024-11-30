@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useTransition } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import QuantityCounter from "@/components/QuantityCounter";
 import Stars from "@/components/Stars";
@@ -9,9 +9,9 @@ import { useAppDispatch, useAppSelector } from "@/hooks/typedhooks";
 import { addToCart } from "@/features/cart-slice";
 
 const ProductDetailsPage = () => {
+  const [isPending, startTransition] = useTransition();
   const quantity = useAppSelector((state) => state.counter.count);
-  const dispatch = useAppDispatch()
-
+  const dispatch = useAppDispatch();
 
   const { id } = useParams<{ id: string }>();
   const productId = parseInt(id!, 10);
@@ -24,10 +24,12 @@ const ProductDetailsPage = () => {
     isLoading,
   } = GetProductById(productId);
 
-  const handleNavigate = () => {
-    if (product && quantity > 0) {
-      dispatch(addToCart({...product,quantity}))
-    }
+  const handleAddToCart = () => {
+    startTransition(() => {
+      if (product && quantity > 0) {
+        dispatch(addToCart({ ...product, quantity }));
+      }
+    });
   };
 
   if (isError) return <p>{error.message}</p>;
@@ -70,7 +72,11 @@ const ProductDetailsPage = () => {
           {/* Quantity and Add to Cart */}
           <div className="flex items-center space-x-3">
             <QuantityCounter />
-            <Button onClick={()=>handleNavigate()} className="bg-green-600 text-white px-4 py-2">
+            <Button
+              disabled={quantity == 0 || isPending}
+              onClick={() => handleAddToCart()}
+              className="bg-green-600 text-white px-4 py-2"
+            >
               Add To Cart
             </Button>
           </div>
