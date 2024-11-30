@@ -10,15 +10,19 @@ import {
   RecoilRoot,
 } from 'recoil';
 import App from "./App";
+import { Provider } from "react-redux";
+import store from "./store";
 
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
   <RecoilRoot>
+    <Provider store={store}>
     <QueryClientProvider client={queryClient}>
       <Router><App /></Router>
     </QueryClientProvider>
+    </Provider>
     </RecoilRoot>
   </React.StrictMode>
 );
