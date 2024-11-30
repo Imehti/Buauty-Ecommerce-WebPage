@@ -7,7 +7,7 @@ interface ProductCardsProps {
   price_sign: string;
   image_link: string;
   product_type: string;
-  //id:number
+  id:number
 }
 
 const ProductCards = ({
@@ -16,12 +16,12 @@ const ProductCards = ({
   price_sign,
   image_link,
   product_type,
-  //id
+  id
 }: ProductCardsProps) => {
   return (
     <>
-    <Link to={'/productDetails'}>
-      <div onClick={()=>{}} className="relative m-4  flex flex-col justify-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+    <Link to={`/productDetails/${id}`}>
+      <div className="relative m-4  flex flex-col justify-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
         <div>
           <img
             className="w-full aspect-square rounded-t-md"
