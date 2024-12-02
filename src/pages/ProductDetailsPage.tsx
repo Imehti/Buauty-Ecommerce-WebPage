@@ -4,7 +4,7 @@ import QuantityCounter from "@/components/QuantityCounter";
 import Stars from "@/components/Stars";
 import { Button } from "@/components/ui/button";
 import useProducts from "@/hooks/useProducts";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedhooks";
 import { addToCart } from "@/features/cart-slice";
 
@@ -121,8 +121,8 @@ const ProductDetailsPage = () => {
                 Add To Cart
               </Button>
             ) : (
-              <span className="text-green-600 font-semibold">
-                Already in Cart
+              <span className="text-green-600 font-semibold mt-8">
+                <Link to={'/cart'}>Already in Cart</Link>
               </span>
             )}
           </div>
