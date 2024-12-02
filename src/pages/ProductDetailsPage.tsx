@@ -1,17 +1,16 @@
-import React, { useTransition } from "react";
+import React, { useState } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import QuantityCounter from "@/components/QuantityCounter";
 import Stars from "@/components/Stars";
 import { Button } from "@/components/ui/button";
 import useProducts from "@/hooks/useProducts";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedhooks";
 import { addToCart } from "@/features/cart-slice";
 
 const ProductDetailsPage = () => {
-  const [isPending, startTransition] = useTransition();
-  const quantity = useAppSelector((state) => state.counter.count);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const { id } = useParams<{ id: string }>();
   const productId = parseInt(id!, 10);
@@ -24,12 +23,28 @@ const ProductDetailsPage = () => {
     isLoading,
   } = GetProductById(productId);
 
+  const cartItem = useAppSelector((state) =>
+    state.cart.items.find((item) => item.id === productId)
+  );
+
+  // Local state to handle quantity before adding to the cart
+  const [localQuantity, setLocalQuantity] = useState(1);
+
   const handleAddToCart = () => {
-    startTransition(() => {
-      if (product && quantity > 0) {
-        dispatch(addToCart({ ...product, quantity }));
-      }
-    });
+    if (product) {
+      dispatch(addToCart({ ...product, quantity: localQuantity }));
+      navigate("/cart");
+    }
+  };
+
+  const incrementLocalQuantity = () => {
+    setLocalQuantity((prev) => prev + 1);
+  };
+
+  const decrementLocalQuantity = () => {
+    if (localQuantity > 1) {
+      setLocalQuantity((prev) => prev - 1);
+    }
   };
 
   if (isError) return <p>{error.message}</p>;
@@ -71,14 +86,45 @@ const ProductDetailsPage = () => {
 
           {/* Quantity and Add to Cart */}
           <div className="flex items-center space-x-3">
-            <QuantityCounter />
-            <Button
-              disabled={quantity == 0 || isPending}
-              onClick={() => handleAddToCart()}
-              className="bg-green-600 text-white px-4 py-2"
-            >
-              Add To Cart
-            </Button>
+            {!cartItem ? (
+              // If not in cart, use local quantity logic
+              <div className="flex items-center border border-gray-300 rounded-md overflow-hidden w-44 h-fit">
+                <div className="flex justify-center items-center w-16 bg-gray-100 text-gray-700 text-sm font-medium border-r border-gray-300">
+                  QTY
+                </div>
+                <button
+                  disabled={localQuantity <= 1}
+                  onClick={decrementLocalQuantity}
+                  className="w-8 h-8 flex justify-center items-center text-gray-700 hover:bg-gray-200 border-r border-gray-300"
+                >
+                  -
+                </button>
+                <div className="flex-1 flex justify-center items-center text-gray-900 text-lg font-semibold">
+                  {localQuantity}
+                </div>
+                <button
+                  onClick={incrementLocalQuantity}
+                  className="w-8 h-8 flex justify-center items-center text-gray-700 hover:bg-gray-200"
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              // If in cart, use the QuantityCounter component
+              <QuantityCounter id={productId} quantity={cartItem.quantity} />
+            )}
+            {!cartItem ? (
+              <Button
+                onClick={handleAddToCart}
+                className="bg-green-600 text-white px-4 py-2"
+              >
+                Add To Cart
+              </Button>
+            ) : (
+              <span className="text-green-600 font-semibold">
+                Already in Cart
+              </span>
+            )}
           </div>
         </div>
       </div>
