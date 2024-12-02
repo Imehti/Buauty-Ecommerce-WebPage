@@ -5,6 +5,11 @@ import QuantityCounter from "./QuantityCounter";
 const Cart = () => {
   const items = useAppSelector((state) => state.cart.items);
 
+  const totalPrice = items.reduce(
+    (acc, item) => acc + Number(item.quantity) * Number(item.price),
+    0
+  );
+
   return (
     <div className="container mx-auto p-4 h-fit">
       <h1 className="text-3xl font-serif text-center mb-6">Your Cart</h1>
@@ -21,7 +26,7 @@ const Cart = () => {
               />
               <p className="flex-1 font-semibold">{item.name}</p>
               <span className="text-lg font-bold mr-4">
-                {item.price}
+                {Number(item.price) * Number(item.quantity)}
                 {item.price_sign}
               </span>
               <QuantityCounter id={item.id} quantity={item.quantity} />
@@ -43,8 +48,10 @@ const Cart = () => {
               </button>
             </div>
           ))}
-          <div className="mt-4 text-right">
-            {/* Total price can go here if needed */}
+
+          <div className="mt-4 text-right flex justify-end space-x-1">
+            <p>Total Price :</p>
+            <span>{ totalPrice+'$'}</span>
           </div>
         </div>
       )}
