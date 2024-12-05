@@ -1,139 +1,129 @@
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { pick } from "lodash";
 import { useForm } from "react-hook-form";
 import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
 import CardWrapper from "./CardWrapper";
 import { LoginSchema } from "@/schemas";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
-import FormSuccess from "./FormSuccess";
-import FormError from "./FormError";
-import { login } from "@/actions/login";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import currentUser from "@/atom/currentUser";
 import { User } from "firebase/auth";
+import FormSuccess from "./FormSuccess";
+import FormError from "./FormError";
+import { login } from "@/actions/login";
+import { useState } from "react";
 
-interface LoginFormProps {
-  title: string;
-}
+// interface LoginFormProps {
+//   title: string;
+// }
 
 const LoginForm = () => {
-  const [error, setError] = useState<string | undefined>();
-  const [success, setSuccess] = useState<string | undefined>();
-  const [isPending, setIsPending] = useState(false);
-  const [user, setUser] = useRecoilState<User | null>(currentUser);
+  const [status, setStatus] = useState<{ error?: string; success?: string; isPending: boolean }>({
+    error: undefined,
+    success: undefined,
+    isPending: false,
+  });
+  
+  const [, setUser] = useRecoilState<User | null>(currentUser);
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
     resolver: zodResolver(LoginSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
-    setError("");
-    setSuccess("");
-    setIsPending(true); // Set isPending to true when the submission starts
-    login(values)
-      .then((data) => {
-        if (data?.error) {
-          setError(data.error);
-        } else if (data?.success) {
-          setSuccess(data.success);
-          setUser(data.user);
-          // console.log("User state updated:", data.user);
-          const userDataToStore = pick(data.user, [
-            "uid",
-            "email",
-            "displayName",
-          ]); // Extract only the serializable properties
-          try {
-            console.log(userDataToStore)
-            localStorage.setItem("user", JSON.stringify(userDataToStore));
-          } catch (error) {
-            console.error("Error storing user data in local storage:", error);
-          }
-          navigate("/");
+  const onSubmit = async (values: z.infer<typeof LoginSchema>) => {
+    setStatus({ error: "", success: "", isPending: true });
+    try {
+      const data = await login(values);
+      if (data?.error) {
+        setStatus((prev) => ({ ...prev, error: data.error }));
+      } else if (data?.success) {
+        setStatus((prev) => ({ ...prev, success: data.success }));
+        setUser(data.user);  // Update Recoil state
+  
+        // Extract only serializable data
+        const userDataToStore = {
+          uid: data.user.uid,
+          email: data.user.email,
+          displayName: data.user.displayName,
+        };
+  
+        try {
+          localStorage.setItem("user", JSON.stringify(userDataToStore));  // Sync with localStorage
+        } catch (error) {
+          console.error("Error storing user data in local storage:", error);
         }
-      })
-      .finally(() => {
-        setIsPending(false); // Set isPending to false when the submission is done
-      });
+  
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+    } finally {
+      setStatus((prev) => ({ ...prev, isPending: false }));
+    }
   };
-  // useEffect(() => {
+  
 
-  //   if (user && user !== null) {
-  //     try {
-  //       localStorage.setItem("user", JSON.stringify(user));
-  //     } catch (error) {
-  //       console.error("Error storing user data in local storage:", error);
-  //     }
-  //   }
-  // }, [user]);
   return (
-    <>
-      <CardWrapper
-        headerLable="Welcome back!"
-        backButtonLable="Don't have an account?"
-        backButtonHref="/register"
-        showSocial
-      >
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="space-y-4 mb-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="border border-gray-300 w-96"
-                        type="email"
-                        placeholder="example@gmail.com"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        {...field}
-                        className="border border-gray-300 w-96"
-                        type="password"
-                        placeholder="*****"
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-            <FormSuccess message={success} />
-            <FormError message={error} />
-            <Button
-              disabled={isPending}
-              type="submit"
-              className="mt-7 w-full border border-gray-300 text-white bg-green-700 hover:bg-indigo-700"
-            >
-              Login
-            </Button>
-          </form>
-        </Form>
-      </CardWrapper>
-    </>
+    <CardWrapper
+      headerLable="Welcome back!"
+      backButtonLable="Don't have an account?"
+      backButtonHref="/register"
+      showSocial
+    >
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <div className="space-y-4 mb-4">
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Email</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="border border-gray-300 w-96"
+                      type="email"
+                      placeholder="example@gmail.com"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="border border-gray-300 w-96"
+                      type="password"
+                      placeholder="*****"
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </div>
+          <FormSuccess message={status.success} />
+          <FormError message={status.error} />
+          <Button
+            disabled={status.isPending}
+            type="submit"
+            className="mt-7 w-full border border-gray-300 text-white bg-green-700 hover:bg-indigo-700"
+          >
+            Login
+          </Button>
+        </form>
+      </Form>
+    </CardWrapper>
   );
 };
 
