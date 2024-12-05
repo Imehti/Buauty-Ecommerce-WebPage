@@ -1,23 +1,27 @@
 import React from "react";
 import { useAppDispatch } from "@/hooks/typedhooks";
 import { updateQuantity } from "@/features/cart-slice";
+import { useRecoilValue } from "recoil";
+import currentUserState from "@/selector/currentUser";
 
 interface QuantityCounterProps {
   id: number;
   quantity: number;
-
 }
 
-const QuantityCounter= ({ id, quantity }:QuantityCounterProps) => {
+const QuantityCounter = ({ id, quantity }: QuantityCounterProps) => {
   const dispatch = useAppDispatch();
+  const user = useRecoilValue(currentUserState ); // Get the current user from Recoil
 
   const increment = () => {
-    dispatch(updateQuantity({ id, quantity: quantity + 1 }));
+    if (user) {
+      dispatch(updateQuantity({ userId: user.uid, id, quantity: quantity + 1 }));
+    }
   };
 
   const decrement = () => {
-    if (quantity > 0) {
-      dispatch(updateQuantity({ id, quantity: quantity - 1 }));
+    if (quantity > 0 && user) {
+      dispatch(updateQuantity({ userId: user.uid, id, quantity: quantity - 1 }));
     }
   };
 
