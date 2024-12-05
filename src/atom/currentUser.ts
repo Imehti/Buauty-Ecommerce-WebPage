@@ -1,6 +1,7 @@
-import { User } from "firebase/auth";
 import { atom } from "recoil";
+import { User } from "firebase/auth";
 
+// Recoil state for current user
 const currentUser = atom<User | null>({
   key: "currentUser",
   default: (() => {
@@ -15,7 +16,13 @@ const currentUser = atom<User | null>({
     } else {
       return null;
     }
-  })() as User | null,
+  })(),
 });
+
+// Reset state when user logs out
+export const resetUserState = () => {
+  localStorage.removeItem("user");
+  return null;
+};
 
 export default currentUser;
