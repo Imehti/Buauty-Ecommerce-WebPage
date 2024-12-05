@@ -1,23 +1,32 @@
 import React from "react";
-import { useAppSelector } from "@/hooks/typedhooks";
+import { useAppDispatch, } from "@/hooks/typedhooks";
 import QuantityCounter from "./QuantityCounter";
+import {  removeFromCart } from "@/features/cart-slice";
+import { useRecoilValue } from "recoil";
+import currentUserState from "@/selector/currentUser";
 
 const Cart = () => {
-  const items = useAppSelector((state) => state.cart.items);
-
-  const totalPrice = items.reduce(
+  const user = useRecoilValue(currentUserState);
+  // const items = useAppSelector((state) => state.cart.items);
+  // const userItems=user?.uid ? items[user.uid] : []
+  const storedProducts = localStorage.getItem("userProducts");
+  const userItems = storedProducts ? JSON.parse(storedProducts) : [];
+  const dispatch = useAppDispatch();
+  const totalPrice =Array.isArray(userItems) ? userItems.reduce(
     (acc, item) => acc + Number(item.quantity) * Number(item.price),
     0
-  );
+  ) : 0;  
+
+ 
 
   return (
     <div className="container mx-auto p-4 h-fit">
       <h1 className="text-3xl font-serif text-center mb-6">Your Cart</h1>
-      {items.length === 0 ? (
+      {userItems.length === 0 ? (
         <p className="text-center text-lg">Your cart is empty.</p>
       ) : (
         <div>
-          {items.map((item) => (
+          {Array.isArray(userItems) && userItems.map((item) => (
             <div key={item.id} className="flex items-center border-b py-4">
               <img
                 className="w-32 h-32 object-cover mr-4"
@@ -30,7 +39,15 @@ const Cart = () => {
                 {item.price_sign}
               </span>
               <QuantityCounter id={item.id} quantity={item.quantity} />
-              <button className="ml-4" aria-label="Remove item">
+              <button
+                onClick={() =>
+                  dispatch(
+                    removeFromCart({ userId: user?.uid, itemId: item.id })
+                  )
+                }
+                className="ml-4"
+                aria-label="Remove item"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -51,7 +68,7 @@ const Cart = () => {
 
           <div className="mt-4 text-right flex justify-end space-x-1">
             <p>Total Price :</p>
-            <span>{ totalPrice+'$'}</span>
+            <span>{totalPrice + "$"}</span>
           </div>
         </div>
       )}
