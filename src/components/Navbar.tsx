@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import LoginButton from "./auth/LoginButton";
 import LogoutButton from "./auth/LogOutButton";
+import  { resetUserState } from "@/atom/currentUser";
 
 const Navbar = () => {
   const [isMenuOpen, setISMenuOpen] = useState(false);
@@ -11,25 +12,27 @@ const Navbar = () => {
   useEffect(() => {
     const user = localStorage.getItem("user");
     setIsLoggedIn(user !== null && user !== undefined);
-  }, [localStorage.getItem("user")]);
+  }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("user");
-    setIsLoggedIn(false);
+    console.log('logout');
+    resetUserState();  // Clear Recoil state
+    localStorage.removeItem('userProducts')
+    setIsLoggedIn(false); // Update local state to reflect logout
   };
   return (
     <>
       <div className="hidden sm:block w-full">
         <nav>
-          <ul className="flex flex-row pl-14 items-center gap-8 pt-4 text-xl font-semibold">
-            <li>Home</li>
-            <li>Shop</li>
-            <li>Blog</li>
-            <li>Contact us</li>
-            <Link to={"/Cart"}>Cart</Link>
+          <ul className="flex flex-row pl-14 items-center gap-8 pt-4 text-xl font-semibold h-fit">
+            <Link to={''} className="navLink-hover">Home</Link>
+            <Link to={''} className="navLink-hover">Shop</Link>
+            <Link to={''} className="navLink-hover">Blog</Link>
+            <Link to={''} className="navLink-hover">Contact us</Link>
+            <Link to={"/Cart"} className="navLink-hover">Cart</Link>
             <div className="space-x-4">
               {isLoggedIn ? (
-                <Button onClick={handleLogout}>Logout</Button>
+                <Button onClick={()=>handleLogout()}>Logout</Button>
               ) : (
                 <Link to={"/login"}>
                   <Button>Login</Button>
