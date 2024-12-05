@@ -7,6 +7,8 @@ import useProducts from "@/hooks/useProducts";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedhooks";
 import { addToCart } from "@/features/cart-slice";
+import { useRecoilValue } from "recoil";
+import currentUserState from "@/selector/currentUser";
 
 const ProductDetailsPage = () => {
   const dispatch = useAppDispatch();
@@ -23,17 +25,27 @@ const ProductDetailsPage = () => {
     isLoading,
   } = GetProductById(productId);
 
-  const cartItem = useAppSelector((state) =>
-    state.cart.items.find((item) => item.id === productId)
-  );
+  const user = useRecoilValue(currentUserState);
+  const cartItems = useAppSelector((state) => state.cart.items);
+  const cartItem =
+    user && user.uid
+      ? cartItems[user.uid]?.find((item) => item.id === productId)
+      : null;
 
   // Local state to handle quantity before adding to the cart
   const [localQuantity, setLocalQuantity] = useState(1);
 
   const handleAddToCart = () => {
-    if (product) {
-      dispatch(addToCart({ ...product, quantity: localQuantity }));
+    if (product && user && user !== null) {
+      dispatch(
+        addToCart({
+          userId: user.uid,
+          item: { ...product, quantity: localQuantity },
+        })
+      );
       navigate("/cart");
+    } else {
+      navigate("/login");
     }
   };
 
@@ -122,7 +134,7 @@ const ProductDetailsPage = () => {
               </Button>
             ) : (
               <span className="text-green-600 font-semibold mt-8">
-                <Link to={'/cart'}>Already in Cart</Link>
+                <Link to={"/cart"}>Already in Cart</Link>
               </span>
             )}
           </div>
