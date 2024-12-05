@@ -6,7 +6,9 @@ import { auth } from "@/firebase";
 export const login = async (values: z.infer<typeof LoginSchema>) => {
   const validatedFields = LoginSchema.safeParse(values);
 
-  if (!validatedFields.success) return { error: "invalid fields" };
+  if (!validatedFields.success) {
+    return { error: "Invalid fields" };
+  }
 
   const { password, email } = validatedFields.data;
 
@@ -17,10 +19,19 @@ export const login = async (values: z.infer<typeof LoginSchema>) => {
       password
     );
     const user = userCredential.user;
+
+    // Return user data if login is successful
     return { user, success: "Login successfully", error: null };
-  } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    return { error: errorMessage };
+  } catch (error) {
+    // Firebase-specific error handling
+    if (error instanceof Error) {
+      const errorMessage = error.message;
+      console.error("Error message:", errorMessage);
+
+      return { error: errorMessage }; // Return the error message
+    } else {
+      console.error("Unknown error:", error);
+      return { error: "Unknown error occurred" };
+    }
   }
 };
