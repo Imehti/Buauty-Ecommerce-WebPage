@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppDispatch, } from "@/hooks/typedhooks";
+import { useAppDispatch, useAppSelector, } from "@/hooks/typedhooks";
 import QuantityCounter from "./QuantityCounter";
 import {  removeFromCart } from "@/features/cart-slice";
 import { useRecoilValue } from "recoil";
@@ -7,10 +7,9 @@ import currentUserState from "@/selector/currentUser";
 
 const Cart = () => {
   const user = useRecoilValue(currentUserState);
-  // const items = useAppSelector((state) => state.cart.items);
-  // const userItems=user?.uid ? items[user.uid] : []
-  const storedProducts = localStorage.getItem("userProducts");
-  const userItems = storedProducts ? JSON.parse(storedProducts) : [];
+  const items = useAppSelector((state) => state.cart.items);
+  const userItems=user?.uid ? items[user.uid] : []
+
   const dispatch = useAppDispatch();
   const totalPrice =Array.isArray(userItems) ? userItems.reduce(
     (acc, item) => acc + Number(item.quantity) * Number(item.price),
@@ -22,7 +21,7 @@ const Cart = () => {
   return (
     <div className="container mx-auto p-4 h-fit">
       <h1 className="text-3xl font-serif text-center mb-6">Your Cart</h1>
-      {userItems.length === 0 ? (
+      {Array.isArray(userItems) && userItems.length === 0 ? (
         <p className="text-center text-lg">Your cart is empty.</p>
       ) : (
         <div>
@@ -30,7 +29,7 @@ const Cart = () => {
             <div key={item.id} className="flex items-center border-b py-4">
               <img
                 className="w-32 h-32 object-cover mr-4"
-                src={item.image_link}
+                src={item.api_featured_image}
                 alt={item.name}
               />
               <p className="flex-1 font-semibold">{item.name}</p>
