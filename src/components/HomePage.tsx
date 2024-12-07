@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Navbar from "./Navbar";
 import { Button } from "./ui/button";
 
@@ -11,7 +12,7 @@ const HomePage = () => {
         </h2>
       </div>
       <div className="hidden sm:block absolute sm:top-[43%] top-[48%] left-[11%]">
-        <Button>Buy Now</Button>
+        <Button><Link to={'/allProducts'}>Buy Now</Link></Button>
       </div>
     </div>
   );
