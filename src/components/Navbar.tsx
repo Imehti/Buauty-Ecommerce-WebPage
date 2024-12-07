@@ -3,7 +3,7 @@ import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import LoginButton from "./auth/LoginButton";
 import LogoutButton from "./auth/LogOutButton";
-import  { resetUserState } from "@/atom/currentUser";
+import { resetUserState } from "@/atom/currentUser";
 
 const Navbar = () => {
   const [isMenuOpen, setISMenuOpen] = useState(false);
@@ -15,24 +15,33 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    console.log('logout');
-    resetUserState();  // Clear Recoil state
-    localStorage.removeItem('userProducts')
+    resetUserState(); // Clear Recoil state
+    localStorage.removeItem("userProducts");
     setIsLoggedIn(false); // Update local state to reflect logout
   };
   return (
     <>
       <div className="hidden sm:block w-full">
-        <nav>
-          <ul className="flex flex-row pl-14 items-center gap-8 pt-4 text-xl font-semibold h-fit">
-            <Link to={''} className="navLink-hover">Home</Link>
-            <Link to={''} className="navLink-hover">Shop</Link>
-            <Link to={''} className="navLink-hover">Blog</Link>
-            <Link to={''} className="navLink-hover">Contact us</Link>
-            <Link to={"/Cart"} className="navLink-hover">Cart</Link>
+        <nav className="flex justify-between text-xl font-semibold">
+          <ul className="flex flex-row pl-14 items-center pt-4 gap-8 h-fit">
+            <Link to={""} className="navLink-hover">
+              Home
+            </Link>
+            <Link to={""} className="navLink-hover">
+              Shop
+            </Link>
+            <Link to={""} className="navLink-hover">
+              Blog
+            </Link>
+            <Link to={""} className="navLink-hover">
+              Contact us
+            </Link>
+            <Link to={"/Cart"} className="navLink-hover">
+              Cart
+            </Link>
             <div className="space-x-4">
               {isLoggedIn ? (
-                <Button onClick={()=>handleLogout()}>Logout</Button>
+                <Button onClick={() => handleLogout()}>Logout</Button>
               ) : (
                 <Link to={"/login"}>
                   <Button>Login</Button>
@@ -40,6 +49,23 @@ const Navbar = () => {
               )}
             </div>
           </ul>
+          <div className="p-4 flex justify-center items-center space-x-2 h-fit">
+            <Link to={"/profile"}>Profile</Link>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="size-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              />
+            </svg>
+          </div>
         </nav>
       </div>
 
