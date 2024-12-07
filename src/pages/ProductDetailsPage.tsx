@@ -48,7 +48,6 @@ const ProductDetailsPage = () => {
       navigate("/login");
     }
   };
-
   const incrementLocalQuantity = () => {
     setLocalQuantity((prev) => prev + 1);
   };
@@ -64,13 +63,24 @@ const ProductDetailsPage = () => {
 
   return (
     <>
-      <div className="grid grid-cols-3 grid-rows-1">
+      <div className="grid grid-cols-3 grid-rows-1 p-10">
         <div className="col-span-2 ml-12 p-12">
           <img
-            className="w-[90%] h-[90%] object-fill"
-            src={product?.image_link}
+            className="w-[70%] h-[70%] object-fill pt-8"
+            src={product?.api_featured_image}
             alt={product?.name}
           />
+          <div className="h-fit mt-12 grid grid-cols-5 gap-5">
+            {product?.product_colors.slice(0,20).map((item) => (
+              <div className="flex space-x-3">
+                <div
+                  className={`w-6 h-6 rounded-full`}
+                  style={{ backgroundColor: item.hex_value }}
+                ></div>
+                <span className="text-sm">{item.colour_name}</span>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex flex-col items-start justify-start h-2/3 m-6 space-y-3">
           {/* Product Name */}
