@@ -3,9 +3,10 @@ import ProductCards from "../components/Product-cards";
 import { Button } from "@/components/ui/button";
 import ProductCardSkeleton from "@/components/CardSkelteon";
 import useProducts from "@/hooks/useProducts";
+import AdvanceSearch from "@/components/AdvanceSearch";
 
 const AllProducts = () => {
-  const pageSize = 19; // Number of products per page
+  const pageSize = 20; // Number of products per page
   const [page, setPage] = useState(1);
   const {fetchProducts} = useProducts()
   const { data: allProducts, isLoading, isError, refetch } = fetchProducts;
@@ -52,8 +53,11 @@ const AllProducts = () => {
   return (
     <>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-10">
-        <div className="flex justify-center mt-3">
-          <h1 className="text-2xl font-mono">All Products</h1>
+        <div className="col-span-4 justify-center mt-3 h-fit">
+          <h1 className="text-4xl font-mono italic">All Products</h1>
+          <div className="mt-4">
+          <AdvanceSearch />
+          </div>
         </div>
         {currentProducts?.map((product) => (
           <ProductCards
@@ -62,7 +66,7 @@ const AllProducts = () => {
             name={product.name}
             price={product.price}
             price_sign={product.price_sign}
-            image_link={product.image_link}
+            image_link={product.api_featured_image}
             product_type={product.product_type}
           />
         ))}
