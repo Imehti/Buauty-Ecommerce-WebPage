@@ -14,6 +14,7 @@ const Opinions = lazy(() => import("@/components/OpinionSection"));
 const TeamSection = lazy(() => import("@/components/Team"));
 const Footer = lazy(() => import("@/components/Footer"));
 const Cart = lazy(() => import("@/components/Cart"));
+const ProfilePage = lazy(() => import("@/pages/ProfilePage"));
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
         <Route path="/allProducts" element={<AllProducts />} />
         <Route path="/productDetails/:id" element={<ProductDetails />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/profile" element={<ProfilePage />} />
         {/* Include About and Blog as part of HomePage or another component */}
         <Route path="/" element={<HomeWithAboutAndBlog />} />
       </Routes>
