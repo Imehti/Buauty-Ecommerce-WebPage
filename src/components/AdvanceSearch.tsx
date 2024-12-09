@@ -6,8 +6,10 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { useState } from "react";
-import { types, tags, category } from "./filterOptions";
+import { types, tags, category, all } from "./filterOptions";
 import FilterSection from "./FilterSection";
+import { useAppDispatch } from "@/hooks/typedhooks";
+import { setFilters } from "@/features/filter-slice";
 
 // Zod schema for validation
 const FormSchema = z.object({
@@ -18,6 +20,7 @@ const FormSchema = z.object({
 
 function AdvanceSearch() {
   const [openSearchForm, setOpenSearchForm] = useState(false);
+  const dispatch=useAppDispatch()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -28,15 +31,13 @@ function AdvanceSearch() {
   });
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log("Selected Types:", data.types);
-    console.log("Selected Tags:", data.tags);
-    console.log("Selected category:", data.category);
+    dispatch(setFilters(data))
     form.reset()
   }
 
   return (
     <>
-      <Button className="bg-blue-700" onClick={() => setOpenSearchForm(!openSearchForm)}>
+      <Button className="bg-gray-400" variant={'outline'} onClick={() => setOpenSearchForm(!openSearchForm)}>
         Advance Search
       </Button>
       {openSearchForm && (
@@ -47,6 +48,8 @@ function AdvanceSearch() {
               <FilterSection name="types" options={types} control={form.control} />
               <FilterSection name="tags" options={tags} control={form.control} />
               <FilterSection name="category" options={category} control={form.control} />
+              <FilterSection name="all" options={all} control={form.control} />
+              
             </div>
 
             <div className="flex justify-center p-1">
