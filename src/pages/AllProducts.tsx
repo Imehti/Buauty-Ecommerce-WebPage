@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import ProductCards from "../components/Product-cards";
 import { Button } from "@/components/ui/button";
 import ProductCardSkeleton from "@/components/CardSkelteon";
@@ -82,22 +82,24 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-10">
-        <div className="col-span-4 justify-center mt-3 h-fit">
-          <h1 className="text-4xl font-mono italic">All Products</h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 sm:p-6 lg:p-10">
+        <div className="col-span-1 sm:col-span-2 lg:col-span-4 justify-center mt-3 h-fit">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-mono italic text-center lg:text-left">
+            All Products
+          </h1>
           <div className="mt-4">
             <AdvanceSearch />
           </div>
           {hasFilters && (
-            <div className="flex justify-center">
+            <div className="flex flex-wrap justify-center gap-2 mt-2">
               {filteredOptions?.types?.[0] && (
-                <p>Type: {filteredOptions?.types?.[0]}</p>
+                <p className="text-sm sm:text-base">Type: {filteredOptions?.types?.[0]}</p>
               )}
               {filteredOptions?.tags?.[0] && (
-                <p>Tag: {filteredOptions?.tags?.[0]}</p>
+                <p className="text-sm sm:text-base">Tag: {filteredOptions?.tags?.[0]}</p>
               )}
               {filteredOptions?.category?.[0] && (
-                <p>Category: {filteredOptions?.category?.[0]}</p>
+                <p className="text-sm sm:text-base">Category: {filteredOptions?.category?.[0]}</p>
               )}
             </div>
           )}
@@ -113,7 +115,7 @@ const AllProducts = () => {
             product_type={product.product_type}
           />
         ))}
-        <div className="flex flex-col">
+        <div className="flex flex-col items-center lg:items-start">
           <div className="flex space-x-3 p-4">
             <Button onClick={prevPage} disabled={page === 1}>
               Previous
@@ -122,9 +124,9 @@ const AllProducts = () => {
               Next
             </Button>
           </div>
-          <div className="ml-8">
+          <div className="text-center lg:ml-8">
             <span>
-              page {page} of {totalPages}
+              Page {page} of {totalPages}
             </span>
           </div>
         </div>
