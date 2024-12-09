@@ -4,17 +4,38 @@ import { Button } from "@/components/ui/button";
 import ProductCardSkeleton from "@/components/CardSkelteon";
 import useProducts from "@/hooks/useProducts";
 import AdvanceSearch from "@/components/AdvanceSearch";
+import { useAppSelector } from "@/hooks/typedhooks";
+import useFilteredProducts from "@/hooks/useFilteredProducts";
 
 const AllProducts = () => {
   const pageSize = 20; // Number of products per page
   const [page, setPage] = useState(1);
-  const {fetchProducts} = useProducts()
-  const { data: allProducts, isLoading, isError, refetch } = fetchProducts;
+  const { fetchProducts } = useProducts();
+  const { fetchProductsByFilter } = useFilteredProducts();
+  const filteredOptions = useAppSelector((state) => state.filters);
+  //fetch all products
+  const {
+    data: allProducts,
+    isLoading: allProductsLoading,
+    isError: allProductsIsError,
+    refetch,
+  } = fetchProducts;
+  //fetch filtered products
+  const {
+    data: filteredProducts,
+    isLoading: filteredProductsLoading,
+    isError: filteredProductsIsError,
+  } = fetchProductsByFilter;
+
+  ///check if there is any filter user requested
+  const hasFilters =
+    (filteredOptions.types?.length ?? 0) > 0 ||
+    (filteredOptions.tags?.length ?? 0) > 0 ||
+    (filteredOptions.category?.length ?? 0) > 0;
 
   useEffect(() => {
     refetch();
   }, []);
-
   // Calculate the paginated products
   const totalPages = useMemo(
     () => Math.ceil((allProducts?.length ?? 0) / pageSize),
@@ -22,8 +43,12 @@ const AllProducts = () => {
   );
   const currentProducts = useMemo(() => {
     const startIndex = (page - 1) * pageSize;
-    return allProducts?.slice(startIndex, startIndex + pageSize);
-  }, [page, allProducts, pageSize]);
+    if (hasFilters) {
+      return filteredProducts?.slice(startIndex, startIndex + pageSize);
+    } else {
+      return allProducts?.slice(startIndex, startIndex + pageSize);
+    }
+  }, [page, allProducts, pageSize, filteredProducts, hasFilters]);
 
   const nextPage = useCallback(() => {
     if (page < totalPages) {
@@ -39,16 +64,21 @@ const AllProducts = () => {
     }
   }, [page]);
 
-  if (isLoading)
+  if (allProductsLoading || filteredProductsLoading)
     return (
       <div>
         <ProductCardSkeleton />
         <div className="-mt-56">
-        <ProductCardSkeleton />
+          <ProductCardSkeleton />
         </div>
       </div>
     );
-  if (isError) return <div><p className="text-red-600 font-semibold">Error loading products.</p></div>;
+  if (allProductsIsError || filteredProductsIsError)
+    return (
+      <div>
+        <p className="text-red-600 font-semibold">Error loading products.</p>
+      </div>
+    );
 
   return (
     <>
@@ -56,8 +86,21 @@ const AllProducts = () => {
         <div className="col-span-4 justify-center mt-3 h-fit">
           <h1 className="text-4xl font-mono italic">All Products</h1>
           <div className="mt-4">
-          <AdvanceSearch />
+            <AdvanceSearch />
           </div>
+          {hasFilters && (
+            <div className="flex justify-center">
+              {filteredOptions?.types?.[0] && (
+                <p>Type: {filteredOptions?.types?.[0]}</p>
+              )}
+              {filteredOptions?.tags?.[0] && (
+                <p>Tag: {filteredOptions?.tags?.[0]}</p>
+              )}
+              {filteredOptions?.category?.[0] && (
+                <p>Category: {filteredOptions?.category?.[0]}</p>
+              )}
+            </div>
+          )}
         </div>
         {currentProducts?.map((product) => (
           <ProductCards
