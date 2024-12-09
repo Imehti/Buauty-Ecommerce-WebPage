@@ -11,18 +11,20 @@ export const types = [
   ];
   
   export const tags = [
-    { id: "vegan", label: "Vegan" },
-    { id: "gluten-free", label: "Gluten Free" },
-    { id: "canadian", label: "Canadian" },
-    { id: "natural", label: "Natural" },
-    { id: "organic", label: "Organic" },
+    { id: "Vegan", label: "Vegan" },
+    { id: "Gluten-free", label: "Gluten Free" },
+    { id: "Canadian", label: "Canadian" },
+    { id: "Natural", label: "Natural" },
+    { id: "Organic", label: "Organic" },
   ];
   
   export const category = [
-    { id: "pencil", label: "Pencil" },
-    { id: "cream", label: "Cream" },
-    { id: "palette", label: "Palette" },
-    { id: "liquid", label: "Liquid" },
-    { id: "powder", label: "Powder" },
+    { id: "Pencil", label: "Pencil" },
+    { id: "Cream", label: "Cream" },
+    { id: "Palette", label: "Palette" },
+    { id: "Liquid", label: "Liquid" },
+    { id: "Powder", label: "Powder" },
   ];
+
+  export const all = [{id:'all',label:'All Products'}]
   
