@@ -43,11 +43,11 @@ const FilterSection: React.FC<FilterSectionProps> = ({
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="w-1/3">
+        <FormItem className="w-full sm:w-1/3"> {/* Full width on small screens, 1/3 on larger screens */}
           <FormLabel className="text-sm font-semibold">{name}</FormLabel>
-          <div className="flex flex-col gap-2 mt-2">
+          <div className="flex flex-col gap-4 mt-2">
             {options.map((option) => (
-              <FormItem key={option.id} className="flex items-center space-x-2">
+              <FormItem key={option.id} className="flex items-center space-x-3">
                 <FormControl>
                   <Checkbox
                     checked={field.value?.includes(option.id) ?? false} // Default to false if `field.value` is undefined
@@ -55,6 +55,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
                       handleCheckboxChange(checked, option.id, field)
                     }
                     disabled={selected !== null && selected !== option.id} // Disable other checkboxes if one is selected
+                    className="h-5 w-5" // Larger checkbox size for mobile
                   />
                 </FormControl>
                 <FormLabel className="text-sm">{option.label}</FormLabel>

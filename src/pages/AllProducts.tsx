@@ -82,7 +82,7 @@ const AllProducts = () => {
 
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-4 sm:p-6 lg:p-10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8 sm:p-6 lg:p-10">
         <div className="col-span-1 sm:col-span-2 lg:col-span-4 justify-center mt-3 h-fit">
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-mono italic text-center lg:text-left">
             All Products

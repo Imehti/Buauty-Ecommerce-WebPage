@@ -25,7 +25,7 @@ const LoginForm = () => {
     success: undefined,
     isPending: false,
   });
-  
+
   const [, setUser] = useRecoilState<User | null>(currentUser);
   const navigate = useNavigate();
 
@@ -42,21 +42,21 @@ const LoginForm = () => {
         setStatus((prev) => ({ ...prev, error: data.error }));
       } else if (data?.success) {
         setStatus((prev) => ({ ...prev, success: data.success }));
-        setUser(data.user);  // Update Recoil state
-  
+        setUser(data.user); // Update Recoil state
+
         // Extract only serializable data
         const userDataToStore = {
           uid: data.user.uid,
           email: data.user.email,
           displayName: data.user.displayName,
         };
-  
+
         try {
-          localStorage.setItem("user", JSON.stringify(userDataToStore));  // Sync with localStorage
+          localStorage.setItem("user", JSON.stringify(userDataToStore)); // Sync with localStorage
         } catch (error) {
           console.error("Error storing user data in local storage:", error);
         }
-  
+
         navigate("/");
       }
     } catch (error) {
@@ -65,7 +65,6 @@ const LoginForm = () => {
       setStatus((prev) => ({ ...prev, isPending: false }));
     }
   };
-  
 
   return (
     <CardWrapper
@@ -86,7 +85,7 @@ const LoginForm = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border border-gray-300 w-96"
+                      className="border border-gray-300 w-full sm:w-96"
                       type="email"
                       placeholder="example@gmail.com"
                     />
@@ -103,7 +102,7 @@ const LoginForm = () => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="border border-gray-300 w-96"
+                      className="border border-gray-300 w-full sm:w-96"
                       type="password"
                       placeholder="*****"
                     />

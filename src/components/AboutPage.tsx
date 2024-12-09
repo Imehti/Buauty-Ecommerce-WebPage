@@ -3,7 +3,7 @@ const AboutPage = () => {
     <>
       {/* //pictures */}
       <div className="md:grid grid-cols-2 gap-0 h-dvh aboutBg mt-16 sm:mt-0">
-        <div className="md:m-16 m-4 relative">
+        <div className="md:m-16 m-4 relative h-fit">
           <img
             className="sm:w-[70%] w-[75%] border rounded-md shadow-md transition duration-300 ease-in-out hover:scale-110"
             src="src/assets/aboutPage.avif"
@@ -17,7 +17,7 @@ const AboutPage = () => {
         </div>
 
         {/* //text */}
-        <div className="relative -mt-32 md:mt-28 h-fit m-2 p-12 sm:m-0 sm:p-0">
+        <div className="relative mt-12 md:mt-20 h-fit m-2 p-12 sm:m-0 sm:p-0">
           <div className="h-fit md:m-[20%] md:mt-[4%] ">
             <p className="text-xl">
               ABOUT <span className="text-pink-600">US</span>

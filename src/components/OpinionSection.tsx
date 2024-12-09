@@ -1,7 +1,6 @@
-import useUsers, { Results, Users } from "@/hooks/useUsers";
+import useUsers, { Results } from "@/hooks/useUsers";
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
-import CardSkeleton from "./OpinionSkeleton";
 import OpinionSkeleton from "./OpinionSkeleton";
 
 const Opinions = () => {
@@ -68,9 +67,9 @@ const Opinions = () => {
   return (
     <>
       <div className="bg-gray-100">
-        <div className="flex flex-col items-center justify-center h-fit lg:space-y-4">
+        <div className="flex flex-col items-center justify-center h-fit space-y-2 lg:space-y-4">
           <h2 className="font-medium mt-4 lg:mt-12">TESTIMONIAL</h2>
-          <h1 className="lg:text-4xl text-2xl font-semibold font-serif">
+          <h1 className="lg:text-4xl md:text-2xl font-semibold font-serif">
             What People Say?
           </h1>
         </div>
@@ -84,7 +83,7 @@ const Opinions = () => {
             </h1>
           </div>
         ) : (
-          <div className="md:grid grid-cols-2 justify-center flex flex-col md:mt-24">
+          <div className="md:grid grid-cols-2 justify-center flex flex-col mt-4 md:mt-0 md:mt-24">
             {/* pictures */}
             <div className="grid grid-cols-4 h-fit gap-y-4 gap-x-0 m-12 sm:ml-20">
               {users?.results.map((user) => (
@@ -119,18 +118,17 @@ const Opinions = () => {
                           </p>
                           <p className="font-semibold">{user.location.city}</p>
                         </div>
-                        <p className="md:mt-7 text-left p-1 md:ml-0 w-full font-light">
-                          Lorem ipsum, dolor sit amet consectetur adipisicing
-                          elit. Commodi expedita et molestias fugiat quos
-                          aliquam officia non neque provident. Quaerat
-                          consequatur laborum eaque nam voluptatum nihil unde
-                          placeat aut alias.
-                        </p>
+                 
+                        <p className="md:mt-7 mt-4 text-left p-1 md:ml-0 w-full max-w-3xl mx-auto font-light text-sm sm:text-base leading-relaxed line-clamp-3">
+  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Commodi expedita et molestias fugiat quos aliquam officia non neque provident. Quaerat consequatur laborum eaque nam voluptatum nihil unde placeat aut alias.
+</p>
+
+                
                       </div>
                       <div className="flex mr-12">
                         {Array(5)
                           .fill("")
-                          .map((_, index) => (
+                          .map(() => (
                             <svg
                               className="w-4 h-4 text-yellow-300 ms-1"
                               aria-hidden="true"

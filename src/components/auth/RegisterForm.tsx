@@ -77,7 +77,7 @@ const RegisterForm = () => {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border border-gray-300 w-96"
+                        className="border border-gray-300 w-full sm:w-96"
                         type="text"
                         placeholder="john"
                       />
@@ -95,7 +95,7 @@ const RegisterForm = () => {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border border-gray-300 w-96"
+                        className="border border-gray-300 w-full sm:w-96"
                         type="email"
                         placeholder="example@gmail.com"
                       />
@@ -113,7 +113,7 @@ const RegisterForm = () => {
                     <FormControl>
                       <Input
                         {...field}
-                        className="border border-gray-300 w-96"
+                        className="border border-gray-300 w-full sm:w-96"
                         type="password"
                         placeholder="******"
                       />

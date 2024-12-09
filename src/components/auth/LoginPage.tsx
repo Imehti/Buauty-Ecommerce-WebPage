@@ -3,14 +3,13 @@ import LoginForm from "./LoginForm";
 const LoginPage = () => {
   return (
     <>
-      <div className="grid grid-cols-2">
-        <div className="loginPageBg"></div>
-        <div className="LoginForm">
-            <div className="h-fit flex justify-center items-center mt-[20%]">
-       <LoginForm />
+      <div className="grid grid-cols-3 md:grid-cols-2">
+      <div className="hidden loginPageBg md:block"></div>
+      <div className="LoginForm col-span-3 md:col-span-1">
+          <div className="h-fit flex justify-center items-center mt-[20%]">
+            <LoginForm />
+          </div>
         </div>
-        </div>
-      
       </div>
     </>
   );

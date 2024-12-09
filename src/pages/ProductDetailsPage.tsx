@@ -66,11 +66,11 @@ const ProductDetailsPage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 p-10 h-fit md:relative">
         <div className="md:absolute col-span-1 lg:col-span-2 ml-0 lg:ml-12 p-4 lg:p-12 top-0">
           <img
-            className="w-full md:w-[60%] h-auto object-fill pt-8"
+            className="w-full md:w-[60%] h-auto object-fill aspect-square pt-8"
             src={product?.api_featured_image}
             alt={product?.name}
           />
-          <div className="h-fit mt-12 grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-5 gap-5">
+          <div className="h-fit mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
             {product?.product_colors.slice(0, 20).map((item) => (
               <div className="flex space-x-3" key={item.colour_name}>
                 <div
