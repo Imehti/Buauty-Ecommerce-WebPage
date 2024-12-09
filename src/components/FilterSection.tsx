@@ -7,7 +7,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Control, FieldValues } from "react-hook-form";
+import { Control, FieldValues} from "react-hook-form";
 
 type FilterSectionProps = {
   name: string; // form field name
@@ -26,7 +26,10 @@ const FilterSection: React.FC<FilterSectionProps> = ({
   const handleCheckboxChange = (
     checked: boolean,
     optionId: string,
-    field: any
+    field: {
+      onChange: (value: string[]) => void; // Specify the type of onChange
+      value: string[]; // Specify the type of value
+    }
   ) => {
     // If checked, select the current option and disable others
     if (checked) {
