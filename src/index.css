@@ -104,3 +104,8 @@
     /* background-attachment: fixed; */
   
 }
+
+.navLink-hover:hover {
+  color: white;
+  cursor: pointer;
+}
