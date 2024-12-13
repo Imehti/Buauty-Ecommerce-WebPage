@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/typedhooks";
 import QuantityCounter from "./QuantityCounter";
 import { removeFromCart } from "@/features/cart-slice";
