@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
-import LoginButton from "./auth/LoginButton";
-import LogoutButton from "./auth/LogOutButton";
 import { resetUserState } from "@/atom/currentUser";
 
 const Navbar = () => {
@@ -90,15 +88,20 @@ const Navbar = () => {
           />
         </svg>
         {isMenuOpen && (
-          <div className="bg-amber-200 h-dvh rounded-lg w-1/3">
+          <div className="bg-white opacity-80 h-ful rounded-lg w-full">
             <ul className="flex flex-col items-center font-semibold pt-2">
               <li>Home</li>
               <li>Shop</li>
               <li>Blog</li>
               <li>Contact us</li>
               <div>
-                <LoginButton />
-                <LogoutButton />
+                {isLoggedIn ? (
+                  <Button onClick={() => handleLogout()}>Logout</Button>
+                ) : (
+                  <Link to={"/login"}>
+                    <Button>Login</Button>
+                  </Link>
+                )}
               </div>
             </ul>
           </div>
