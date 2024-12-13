@@ -76,14 +76,14 @@
 }
 
 .aboutBg{
-  background-image: url('src/assets/aboutPageBg.png');
+  background-image: url('/assets/aboutPageBg.png');
   background-repeat: no-repeat;
   background-position: center;
   object-fit: cover;
 }
 
 .loginPageBg{
-  background-image: url('src/assets/login-page/login-page.avif');
+  background-image: url('/assets/login-page/login-page.avif');
     /* background-size: 100% 100%; */
     background-size:cover;
     background-position: center;
@@ -94,7 +94,7 @@
   
 }
 .LoginForm{
-  background-image: url('src/assets/login-page/login.png');
+  background-image: url('/assets/login-page/login.png');
     /* background-size: 100% 100%; */
     background-size:cover;
     background-position: center;
