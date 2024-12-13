@@ -6,7 +6,8 @@ import ProductCardSkeleton from "./CardSkelteon";
 import { Link } from "react-router-dom";
 
 const ProductsPage = () => {
-  const { isLoading, isError, error } = useProducts();
+  const {fetchProducts} = useProducts()
+  const { isLoading, isError, error } = fetchProducts
 
   if (isError)
     return (

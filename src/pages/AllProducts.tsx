@@ -6,6 +6,7 @@ import useProducts from "@/hooks/useProducts";
 import AdvanceSearch from "@/components/AdvanceSearch";
 import { useAppSelector } from "@/hooks/typedhooks";
 import useFilteredProducts from "@/hooks/useFilteredProducts";
+import { useParams } from "react-router-dom";
 
 const AllProducts = () => {
   const pageSize = 20; // Number of products per page
@@ -13,6 +14,8 @@ const AllProducts = () => {
   const { fetchProducts } = useProducts();
   const { fetchProductsByFilter } = useFilteredProducts();
   const filteredOptions = useAppSelector((state) => state.filters);
+  const {param} = useParams()
+  console.log(param);
   //fetch all products
   const {
     data: allProducts,
