@@ -1,4 +1,3 @@
-import React from "react";
 import { useAppDispatch } from "@/hooks/typedhooks";
 import { updateQuantity } from "@/features/cart-slice";
 import { useRecoilValue } from "recoil";
@@ -11,17 +10,21 @@ interface QuantityCounterProps {
 
 const QuantityCounter = ({ id, quantity }: QuantityCounterProps) => {
   const dispatch = useAppDispatch();
-  const user = useRecoilValue(currentUserState ); // Get the current user from Recoil
+  const user = useRecoilValue(currentUserState); // Get the current user from Recoil
 
   const increment = () => {
     if (user) {
-      dispatch(updateQuantity({ userId: user.uid, id, quantity: quantity + 1 }));
+      dispatch(
+        updateQuantity({ userId: user.uid, id, quantity: quantity + 1 })
+      );
     }
   };
 
   const decrement = () => {
     if (quantity > 0 && user) {
-      dispatch(updateQuantity({ userId: user.uid, id, quantity: quantity - 1 }));
+      dispatch(
+        updateQuantity({ userId: user.uid, id, quantity: quantity - 1 })
+      );
     }
   };
 

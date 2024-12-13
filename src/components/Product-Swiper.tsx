@@ -10,7 +10,7 @@ const ProductsSwiper = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
 
   if(isLoading) return <ProductCardSkeleton />
 

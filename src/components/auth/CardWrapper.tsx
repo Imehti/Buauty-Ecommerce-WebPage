@@ -16,7 +16,6 @@ const CardWrapper = ({
   headerLable,
   backButtonHref,
   backButtonLable,
-  showSocial,
 }: CardWrapperProps) => {
   return (
     <>

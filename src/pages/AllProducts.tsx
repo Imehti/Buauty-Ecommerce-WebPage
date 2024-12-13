@@ -38,7 +38,7 @@ const AllProducts = () => {
 
   useEffect(() => {
     refetch();
-  }, []);
+  }, [refetch]);
   // Calculate the paginated products
   const totalPages = useMemo(
     () => Math.ceil((allProducts?.length ?? 0) / pageSize),

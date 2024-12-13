@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LoadingSpinner from "@/components/LoadingSpinner";
 import QuantityCounter from "@/components/QuantityCounter";
 import Stars from "@/components/Stars";
@@ -85,7 +85,9 @@ const ProductDetailsPage = () => {
         <div className="md:absolute flex flex-col items-start justify-start h-fit m-4 lg:m-6 space-y-8 left-[60%] top-[80%]">
           {/* Product Name */}
           <h1 className="text-xl lg:text-2xl font-bold">{product?.name}</h1>
-          <h1 className="text-lg lg:text-xl font-bold">{product?.product_type}</h1>
+          <h1 className="text-lg lg:text-xl font-bold">
+            {product?.product_type}
+          </h1>
 
           {/* Price */}
           <span className="text-lg text-gray-700">

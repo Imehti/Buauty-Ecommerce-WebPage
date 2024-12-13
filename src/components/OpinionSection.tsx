@@ -83,7 +83,7 @@ const Opinions = () => {
             </h1>
           </div>
         ) : (
-          <div className="md:grid grid-cols-2 justify-center flex flex-col mt-4 md:mt-0 md:mt-24">
+          <div className="md:grid grid-cols-2 justify-center flex flex-col mt-4 md:mt-24">
             {/* pictures */}
             <div className="grid grid-cols-4 h-fit gap-y-4 gap-x-0 m-12 sm:ml-20">
               {users?.results.map((user) => (
