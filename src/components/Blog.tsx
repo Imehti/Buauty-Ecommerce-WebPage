@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const BlogPage = () => {
 
-    const [image,setImage]=useState("src/assets/bacground.avif")
+    const [image,setImage]=useState("/assets/bacground.avif")
 
     const handleMouseOver =(imageSrc:string)=>{
         setImage(imageSrc)
@@ -17,10 +17,10 @@ const BlogPage = () => {
             
             `}
           >
-            <li onMouseOver={()=>handleMouseOver("src/assets/blogPic1.webp")} className="hover:text-yellow-500">Body treatment</li>
-            <li onMouseOver={()=>handleMouseOver("src/assets/perofessional-makeup.jpg")} className="hover:text-yellow-500">Professinal makeup</li>
-            <li onMouseOver={()=>handleMouseOver("src/assets/manicure.jpg")} className="hover:text-yellow-500">Maincure & pedicure</li>
-            <li onMouseOver={()=>handleMouseOver("src/assets/haircut.webp")} className="hover:text-yellow-500">Hair cut & Coloring</li>
+            <li onMouseOver={()=>handleMouseOver("/assets/blogPic1.webp")} className="hover:text-yellow-500">Body treatment</li>
+            <li onMouseOver={()=>handleMouseOver("/assets/perofessional-makeup.jpg")} className="hover:text-yellow-500">Professinal makeup</li>
+            <li onMouseOver={()=>handleMouseOver("/assets/manicure.jpg")} className="hover:text-yellow-500">Maincure & pedicure</li>
+            <li onMouseOver={()=>handleMouseOver("/assets/haircut.webp")} className="hover:text-yellow-500">Hair cut & Coloring</li>
           </div>
         </div>
         <div className="col-span-2 ml-2 pr-8 sm:ml-20 sm:pr-0 sm:-mt-24 -mt-4">

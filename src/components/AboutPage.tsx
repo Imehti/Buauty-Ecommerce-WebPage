@@ -6,12 +6,12 @@ const AboutPage = () => {
         <div className="md:m-16 m-4 relative h-fit">
           <img
             className="sm:w-[70%] w-[75%] border rounded-md shadow-md transition duration-300 ease-in-out hover:scale-110"
-            src="src/assets/aboutPage.avif"
+            src="/assets/aboutPage.avif"
             alt=""
           />
           <img
             className="absolute sm:w-[54%] w-2/3 h-auto md:top-1/4 top-[24%] left-[32%] md:left-[45%] border rounded-md aspect-square transition duration-300 ease-in-out hover:scale-110"
-            src="src/assets/aboutPage2.webp"
+            src="/assets/aboutPage2.webp"
             alt=""
           />
         </div>
