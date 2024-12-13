@@ -7,20 +7,34 @@ import "swiper/css/scrollbar";
 import { Products } from "@/hooks/useProducts";
 import { TeamMembersProps } from "./Team-Card";
 
-interface SwiperProps {
-  data: Products[] | undefined | TeamMembersProps[];
-  renderSlide: (item: any) => JSX.Element;
+interface SwiperProps<T> {
+  data: T[] | undefined;
+  renderSlide: (item: T) => JSX.Element;
   swiperConfig?: {
     spaceBetween?: number;
     slidesPerView?: number;
     navigation?: boolean;
-    pagination?: any;
-    scrollbar?: any;
-    breakpoints?: any;
+    pagination?: {
+      dynamicBullets?: boolean;
+      dynamicMainBullets?: number;
+    };
+    scrollbar?: {
+      draggable?: boolean;
+    };
+    breakpoints?: {
+      [key: number]: {
+        slidesPerView?: number;
+        spaceBetween?: number;
+      };
+    };
   };
 }
 
-const ReusableSwiper = ({ data, renderSlide, swiperConfig }: SwiperProps) => {
+const ReusableSwiper = <T extends Products | TeamMembersProps>({
+  data,
+  renderSlide,
+  swiperConfig,
+}: SwiperProps<T>) => {
   const defaultConfig = {
     spaceBetween: 50,
     slidesPerView: 3,
