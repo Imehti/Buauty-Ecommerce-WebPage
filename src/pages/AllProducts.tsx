@@ -67,8 +67,7 @@ const AllProducts = () => {
 
   // Update the URL query parameters when page or filters change
   useEffect(() => {
-    const query: any = { page };
-
+    const query: Record<string, string> = { page: page.toString() };
     // Add filters to query if they exist
     if (filteredOptions.types?.[0]) query.type = filteredOptions.types[0];
     if (filteredOptions.tags?.[0]) query.tag = filteredOptions.tags[0];
