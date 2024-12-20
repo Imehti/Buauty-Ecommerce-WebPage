@@ -18,7 +18,11 @@ const FormSchema = z.object({
   category: z.array(z.string()).optional(),
 });
 
-function AdvanceSearch() {
+interface AdvanceSearchProps {
+  resetPage: () => void;
+}
+
+function AdvanceSearch({ resetPage }: AdvanceSearchProps) {
   const [openSearchForm, setOpenSearchForm] = useState(false);
   const dispatch = useAppDispatch();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -33,6 +37,8 @@ function AdvanceSearch() {
   function onSubmit(data: z.infer<typeof FormSchema>) {
     dispatch(setFilters(data));
     form.reset();
+    resetPage();
+    setOpenSearchForm(false)
   }
 
   return (
@@ -51,10 +57,26 @@ function AdvanceSearch() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
               {/* Filter Sections: Flex container that adjusts on smaller screens */}
               <div className="flex flex-col sm:flex-row sm:space-x-6 sm:space-y-0 space-y-4">
-                <FilterSection name="types" options={types} control={form.control} />
-                <FilterSection name="tags" options={tags} control={form.control} />
-                <FilterSection name="category" options={category} control={form.control} />
-                <FilterSection name="all" options={all} control={form.control} />
+                <FilterSection
+                  name="types"
+                  options={types}
+                  control={form.control}
+                />
+                <FilterSection
+                  name="tags"
+                  options={tags}
+                  control={form.control}
+                />
+                <FilterSection
+                  name="category"
+                  options={category}
+                  control={form.control}
+                />
+                <FilterSection
+                  name="all"
+                  options={all}
+                  control={form.control}
+                />
               </div>
 
               {/* Submit Button: Centered and responsive width */}
